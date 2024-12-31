@@ -1,0 +1,1 @@
+@openzeppelin/=/home/trauslamen/Blockchain_Projects/Quant-Assigment/lib/openzeppelin-contracts
