@@ -19,7 +19,7 @@ NEW_METAMORPH_VAULT_ADDRESS = "0xf26f466633d7597192D7989a9e951B4B9725d1c1"
 # 3. Use an account with enough test ETH & correct roles
 # -------------------------------------------------------------------------
 TEST_ACCOUNT = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
-PRIVATE_KEY = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
+PRIVATE_KEY = "PRIVATE_KEY(its anyways tested one, but still good to not have it in repo)"
 
 # -------------------------------------------------------------------------
 # 4. Data Structures (Same as your original code)
