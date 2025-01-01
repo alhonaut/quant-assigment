@@ -1,63 +1,133 @@
-## Foundry
+# Quant Assignment: Optimized Fund Allocation and MetaMorpho Interaction
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Overview
 
-Foundry consists of:
+This repository contains an optimized workflow for data retrieval, fund allocation, and interaction with the MetaMorpho Protocol. It comprises Python scripts and Solidity files to fetch on-chain data, simulate vault allocations, deploy smart contracts on a mainnet fork, and securely interact with the blockchain.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+---
 
-## Documentation
+## Components
 
-https://book.getfoundry.sh/
+### 1. **Data Pipeline and Allocation Optimization**
+**File**: `main.py`
 
-## Usage
+This script:
+- Fetches data from the Morpho API.
+- Stores data in a local SQL server.
+- Simulates fund allocation (starting with 1 million USD).
+- Uses linear programming to optimize fund distribution across vaults.
+- Integrates risk management strategies to avoid high-risk allocations.
 
-### Build
+**Setup and Execution**:
+1. Create a Python virtual environment:
+   ```bash
+   python -m venv myenv
+   ```
+2. Activate the environment:
+   ```bash
+   source myenv/bin/activate
+   ```
+3. Install required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Run the script:
+   ```bash
+   python script/main.py
+   ```
 
-```shell
-$ forge build
+---
+
+### 2. **Deploying MetaMorpho Smart Contract**
+**File**: `DeployMetaMorpho.s.sol`
+
+This script uses Foundry to:
+- Deploy a simulated vault on a forked mainnet.
+- Interact with the deployed MetaMorpho Factory using USDC.
+- Display transaction logs and details.
+
+**Setup and Execution**:
+1. Fork the mainnet using your RPC URL:
+   ```bash
+   anvil --fork-url https://mainnet.infura.io/v3/$INFURA_KEY
+   ```
+2. Deploy the script:
+   ```bash
+   forge script script/DeployMetaMorpho.s.sol:DeployMetaMorpho 
+      --fork-url https://mainnet.infura.io/v3/$INFURA_KEY        
+      --broadcast
+   ```
+
+---
+
+### 3. **Web3 Interaction with Deployed Contract**
+**File**: `Scripter.py`
+
+This script connects to the forked chain via Web3.py to:
+1. Ensure the chain is ready for transactions.
+2. Simulate a transaction to verify functionality.
+3. Send a signed transaction to the forked mainnet.
+
+**Setup and Execution**:
+1. Complete the deployment step above.
+2. Run the script:
+   ```bash
+   python script/Scripter.py
+   ```
+
+---
+
+## Security Enhancements
+- **Echidna Fuzz Testing**:
+  - `EchidnaMorphoTest.sol` ensures the `reallocate` function in MetaMorpho.sol is secure.
+- **Static Analysis**:
+  - Security report generated using Cyfrin Aderyn static analyzer to validate contract security (see `report.md`).
+
+---
+
+## Structure of the Repository
+- `script/main.py`: Python-based data pipeline and fund allocation.
+- `script/DeployMetaMorpho.s.sol`: Solidity script for mainnet fork deployment.
+- `script/Scripter.py`: Python script for Web3 interaction.
+- `script/EchidnaMorphoTest.sol`: Echidna test file for contract security.
+- `report.md`: Security analysis report.
+- `requirements.txt`: Python dependencies.
+
+---
+
+## Requirements and Dependencies
+- Python 3.x
+- Foundry (for mainnet fork and deployment)
+- Morpho API
+- Web3.py
+- PuLP (for linear programming)
+
+Install dependencies using:
+```bash
+pip install -r requirements.txt
 ```
 
-### Test
+---
 
-```shell
-$ forge test
-```
+## Running Tests and Simulation
+1. Setup the local environment or fork the mainnet as described above.
+2. Run the Python scripts and Foundry commands to simulate transactions.
+3. Review logs and transaction outputs to verify success.
 
-### Format
+---
 
-```shell
-$ forge fmt
-```
+## Notes
+- Make sure to replace `$INFURA_KEY` with your actual Infura API key.
+- The project has been tested with dummy data for demonstration purposes.
+- Refer to the security report for detailed contract analysis.
 
-### Gas Snapshots
+---
 
-```shell
-$ forge snapshot
-```
+## Optional Enhancements
+- Advanced reallocation strategies.
+- Frontend for visualization.
+- Additional Foundry unit tests with coverage reports.
 
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
 
 ```shell
 $ forge --help
