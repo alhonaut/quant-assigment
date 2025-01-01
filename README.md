@@ -42,8 +42,8 @@ This script:
 **File**: `DeployMetaMorpho.s.sol`
 
 This script uses Foundry to:
-- Deploy a simulated vault on a forked mainnet.
-- Interact with the deployed MetaMorpho Factory using USDC.
+- Call a contract Factory on a forked mainnet.
+- Interact with the deployed MetaMorpho USDC Vault.
 - Display transaction logs and details.
 
 **Setup and Execution**:
